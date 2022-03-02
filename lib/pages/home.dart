@@ -1,4 +1,3 @@
-import 'package:carespot/utils/colors.dart';
 import 'package:carespot/widgets/stack_component.dart';
 import 'package:flutter/material.dart';
 
