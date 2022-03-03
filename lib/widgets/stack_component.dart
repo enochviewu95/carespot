@@ -13,7 +13,7 @@ class StackComponent extends StatelessWidget {
           padding: const EdgeInsets.only(left: 0, top: 65, right: 0, bottom: 0),
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 5.5,
+            height: MediaQuery.of(context).size.height / 4.5,
             child: const CardComponent(),
           ),
         ),

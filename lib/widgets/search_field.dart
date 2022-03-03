@@ -25,7 +25,7 @@ class SearchFieldComponent extends StatelessWidget {
                 style: BorderStyle.none,
               )),
           filled: true,
-          fillColor: ComponentColors.secondaryColor,
+          fillColor: ComponentColors.primaryColor,
         ),
       );
   }
