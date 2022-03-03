@@ -21,7 +21,7 @@ class StackComponent extends StatelessWidget {
           right: MediaQuery.of(context).size.width / 70,
           bottom: MediaQuery.of(context).size.height / 180,
           child: Image.asset(
-            'images/nurse.png',
+            'assets/images/nurse.png',
             fit: BoxFit.contain,
             width: MediaQuery.of(context).size.width / 2,
           ),

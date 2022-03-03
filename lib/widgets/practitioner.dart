@@ -8,8 +8,8 @@ class PractitionersComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> entries = <String>[
-      'images/nurse.png',
-      'images/doctor.png'
+      'assets/images/nurse.png',
+      'assets/images/doctor.png'
     ];
     final List<String> names = <String>['Nurse Azia', 'Dr. Daemon'];
     final List<String> distance = <String>['3', '4'];

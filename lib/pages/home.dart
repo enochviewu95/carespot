@@ -46,19 +46,19 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                icon: Image.asset('images/filepad.png'),
+                icon: Image.asset('assets/images/filepad.png'),
                 onPressed: () {},
               ),
               IconButton(
                 onPressed: () {},
-                icon: Image.asset('images/ambulance.png'),
+                icon: Image.asset('assets/images/ambulance.png'),
               ),
               IconButton(
-                  onPressed: () {}, icon: Image.asset('images/home.png')),
+                  onPressed: () {}, icon: Image.asset('assets/images/home.png')),
               IconButton(
-                  onPressed: () {}, icon: Image.asset('images/chat.png')),
+                  onPressed: () {}, icon: Image.asset('assets/images/chat.png')),
               IconButton(
-                  onPressed: () {}, icon: Image.asset('images/avatar.png')),
+                  onPressed: () {}, icon: Image.asset('assets/images/avatar.png')),
             ],
           ),
         )));
