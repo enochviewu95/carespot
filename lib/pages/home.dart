@@ -1,6 +1,7 @@
 import 'package:carespot/widgets/stack_component.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/bottom_navigation.dart';
 import '../widgets/header.dart';
 import '../widgets/practitioner.dart';
 import '../widgets/search_field.dart';
@@ -39,28 +40,8 @@ class _HomeState extends State<Home> {
             ],
           ),
         )),
-        bottomNavigationBar: BottomAppBar(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: Image.asset('assets/images/filepad.png'),
-                onPressed: () {},
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Image.asset('assets/images/ambulance.png'),
-              ),
-              IconButton(
-                  onPressed: () {}, icon: Image.asset('assets/images/home.png')),
-              IconButton(
-                  onPressed: () {}, icon: Image.asset('assets/images/chat.png')),
-              IconButton(
-                  onPressed: () {}, icon: Image.asset('assets/images/avatar.png')),
-            ],
-          ),
-        )));
+        bottomNavigationBar: const BottomNavigation());
   }
 }
+
+
