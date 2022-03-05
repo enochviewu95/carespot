@@ -1,7 +1,5 @@
 import 'package:carespot/services/authentication.dart';
 import 'package:carespot/utils/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,9 +14,9 @@ class _LoginPageState extends State<LoginPage> {
 
   void onGoogleSignClick() {
     final auth = AuthenticationService();
-    final User credentials = auth.signInWithGoogle() as User;
+    final credentials = auth.signInWithGoogle();
     setState(() {
-      _email = credentials.email!;
+      _email = credentials.toString();
     });
     // auth.signOut();
   }

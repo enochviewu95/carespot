@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "724719506036",
+    "project_id": "mobile-care-spot",
+    "storage_bucket": "mobile-care-spot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724719506036:android:102afa6ef575ad8a60f721",
+        "android_client_info": {
+          "package_name": "com.carespot.carespot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724719506036-o7t34anbl8eeheouflsn92e8t22mps4e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carespot.carespot",
+            "certificate_hash": "2f92691f6163ab3e94f0f7c7b39725db44723137"
+          }
+        },
+        {
+          "client_id": "724719506036-ovihjuc2q52fqv7jhjmj5r2irr3fab4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtZx8QLfbiRhpvZ3PxX_wCb_EbEb-QlkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724719506036-ovihjuc2q52fqv7jhjmj5r2irr3fab4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

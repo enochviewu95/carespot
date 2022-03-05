@@ -1,16 +1,26 @@
 import 'package:carespot/firebase_options.dart';
+import 'package:carespot/services/authentication_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class AuthenticationService {
+class AuthenticationService  implements AuthenticationApi{
+
+  //Initialize the firebase auth
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   AuthenticationService(){
     init();
   }
 
+  @override
+  FirebaseAuth getFirebaseAuth(){
+    return _firebaseAuth;
+  }
+
+  @override
   Future<void> init() async{
     if (kDebugMode) {
       print('initializing');
@@ -21,24 +31,18 @@ class AuthenticationService {
     );
   }
 
-  //Check if the state of authentication has changed
-  void authenticationStateChanged() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        if (kDebugMode) {
-          print('User is currently signed out!');
-        }
-      } else {
-        if (kDebugMode) {
-          print('User is signed in');
-        }
-      }
-    });
+  //Get current User uid
+  @override
+  Future<String?> currentUserUid() async {
+    User? user = _firebaseAuth.currentUser;
+    return user?.uid;
   }
 
+
   //Check if the signing token has changed
+  @override
   void tokenChanged() {
-    FirebaseAuth.instance.idTokenChanges().listen((User? user) {
+    _firebaseAuth.idTokenChanges().listen((User? user) {
       if (user == null) {
         if (kDebugMode) {
           print('User is currently signed out!');
@@ -52,8 +56,9 @@ class AuthenticationService {
   }
 
   //Check if the signed in user has changed
+  @override
   void userChanged() {
-    FirebaseAuth.instance.userChanges().listen((User? user) {
+    _firebaseAuth.userChanges().listen((User? user) {
       if (user == null) {
         if (kDebugMode) {
           print('User is currently signed out');
@@ -67,10 +72,12 @@ class AuthenticationService {
   }
 
   //Registration of user
-  Future<void> registerUser(
+  @override
+  Future<UserCredential?> registerUser(
       {required String email, required String password}) async {
+    UserCredential? userCredential;
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -87,12 +94,17 @@ class AuthenticationService {
         print(e);
       }
     }
+    return userCredential;
   }
 
   //Signing in of user
-  Future<void> signIn({required String email, required String password}) async {
+  @override
+  Future<UserCredential?> signIn({required String email, required String password}) async {
+
+    UserCredential? userCredential;
+
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      userCredential = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -109,23 +121,34 @@ class AuthenticationService {
         print(e);
       }
     }
+
+    return userCredential;
   }
 
-  //Verify user email
+  //Verify user email by sending verification email
+  @override
   Future<void> verifyUserEmail() async {
-    User? user = FirebaseAuth.instance.currentUser;
+    User? user = _firebaseAuth.currentUser;
     if(user!=null && !user.emailVerified){
       await user.sendEmailVerification();
     }
   }
 
+  //check if the email is verified
+  bool? isEmailVerified()  {
+    User? user = _firebaseAuth.currentUser;
+    return user?.emailVerified;
+  }
+
   //Signing out
+  @override
   Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+    await _firebaseAuth.signOut();
   }
 
 
   //Sign in with google
+  @override
   Future<UserCredential> signInWithGoogle() async {
     //Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
