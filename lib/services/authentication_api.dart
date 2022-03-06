@@ -11,5 +11,5 @@ abstract class AuthenticationApi {
   Future<void> signOut(); //sign out user
   Future<UserCredential> signInWithGoogle(); //sign user in with google
   Future<String?> currentUserUid(); //get user uid
-  FirebaseAuth getFirebaseAuth();
+  FirebaseAuth? getFirebaseAuth();
 }

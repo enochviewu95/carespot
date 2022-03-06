@@ -47,7 +47,7 @@ void _mapEventToAuthChangedState(AuthenticationEvent event){
 void onAuthChanged(){
     authenticationApi
         .getFirebaseAuth()
-        .authStateChanges()
+        ?.authStateChanges()
         .listen((user) {
           final String? uid = user?.uid;
           _addUser.add(uid!);
