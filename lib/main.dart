@@ -1,3 +1,4 @@
+import 'package:carespot/pages/home.dart';
 import 'package:carespot/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Care Spot',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LoginPage(),
+        '/main-page': (context) => const Home(),
+      },
       theme: ThemeData(
         primarySwatch:Colors.blue,
       ),
-      home: const LoginPage(),
     );
   }
 }

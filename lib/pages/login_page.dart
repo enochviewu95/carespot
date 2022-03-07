@@ -184,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                         elevation: MaterialStateProperty.all(10.0),
                         shape:
                             MaterialStateProperty.all(const StadiumBorder())),
-                    onPressed: () => _loginBloc?.googleSignInClicked.add(GoogleSignInEvent()),
+                    onPressed: () => snapshot.hasData?Navigator.pushNamed(context, '/main-page'):_loginBloc?.googleSignInClicked.add(GoogleSignInEvent()),
                     label:  Padding(
                       padding:
                           const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
