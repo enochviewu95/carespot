@@ -3,6 +3,8 @@ import 'package:carespot/services/authentication.dart';
 import 'package:carespot/utils/colors.dart';
 import 'package:flutter/material.dart';
 
+import '../classes/authentication_event.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -134,29 +136,14 @@ class _LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onPressed: () {
-                    _loginBloc?.loginOrCreateButtonChanged
-                        .add('Create Account');
-                  },
+                  onPressed: () {},
                 ),
               ],
             )));
   }
 
   Widget _buildLoginAndCreateButtons() {
-    return StreamBuilder(
-      initialData: 'Login',
-      stream: _loginBloc?.loginOrCreateButton,
-      builder: ((BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data == 'Login') {
-          return _buttonsLogin();
-        } else if (snapshot.data == 'Create Account') {
-          return _buttonsCreateAccount();
-        } else {
-          return Container();
-        }
-      }),
-    );
+    return _buttonsLogin();
   }
 
   Column _buttonsLogin() {
@@ -165,14 +152,14 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         StreamBuilder(
             initialData: false,
-            stream: _loginBloc?.enableLoginCreateButton,
+            stream: _loginBloc?.enableLoginButton,
             builder: (BuildContext context, AsyncSnapshot snapshot) => SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 15,
                   child: ElevatedButton(
                     child: const Text('Login'),
                     onPressed: snapshot.data
-                        ? () => _loginBloc?.loginOrCreateChanged.add('Login')
+                        ? () => _loginBloc?.loginClicked.add('Login')
                         : null,
                     style: ElevatedButton.styleFrom(
                       primary: ComponentColors.primaryColor,
@@ -186,8 +173,8 @@ class _LoginPageState extends State<LoginPage> {
           height: MediaQuery.of(context).size.height / 30,
         ),
         StreamBuilder(
-            initialData: false,
-            stream: _loginBloc?.enableLoginCreateButton,
+            initialData: '',
+            stream: _loginBloc?.client,
             builder: (BuildContext context, AsyncSnapshot snapshot) => SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 15,
@@ -197,13 +184,13 @@ class _LoginPageState extends State<LoginPage> {
                         elevation: MaterialStateProperty.all(10.0),
                         shape:
                             MaterialStateProperty.all(const StadiumBorder())),
-                    onPressed: () => {},
-                    label: const Padding(
+                    onPressed: () => _loginBloc?.googleSignInClicked.add(GoogleSignInEvent()),
+                    label:  Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: Text(
-                        'Sign In with google',
-                        style: TextStyle(fontSize: 15, color: Colors.white),
+                        'Sign In with google ${snapshot.data}',
+                        style: const TextStyle(fontSize: 15, color: Colors.white),
                       ),
                     ),
                     icon: Image.asset(
@@ -212,30 +199,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 )),
-      ],
-    );
-  }
-
-  Column _buttonsCreateAccount() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        StreamBuilder(
-          initialData: false,
-          stream: _loginBloc?.enableLoginCreateButton,
-          builder: (BuildContext context, AsyncSnapshot snapshot) =>
-              ElevatedButton(
-            child: const Text('Create Account'),
-            onPressed: snapshot.data
-                ? () => _loginBloc?.loginOrCreateChanged.add('Create Account')
-                : null,
-            style: ElevatedButton.styleFrom(
-              elevation: 16.0,
-              primary: Colors.lightGreen.shade200,
-              onSurface: Colors.grey.shade100,
-            ),
-          ),
-        )
       ],
     );
   }
