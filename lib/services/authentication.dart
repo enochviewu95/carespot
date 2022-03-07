@@ -9,26 +9,11 @@ import 'package:firebase_core/firebase_core.dart';
 class AuthenticationService  implements AuthenticationApi{
 
   //Initialize the firebase auth
-  FirebaseAuth? _firebaseAuth;
-
-  AuthenticationService(){
-    init();
-  }
+  final FirebaseAuth? _firebaseAuth = FirebaseAuth.instance;
 
   @override
   FirebaseAuth? getFirebaseAuth(){
     return _firebaseAuth;
-  }
-
-  @override
-  Future<void> init() async{
-    if (kDebugMode) {
-      print('initializing');
-    }
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform
-    ).then((value) => _firebaseAuth = FirebaseAuth.instance);
   }
 
   //Get current User uid
@@ -149,7 +134,7 @@ class AuthenticationService  implements AuthenticationApi{
 
   //Sign in with google
   @override
-  Future<UserCredential> signInWithGoogle() async {
+  Future<UserCredential?> signInWithGoogle() async {
     //Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -163,6 +148,6 @@ class AuthenticationService  implements AuthenticationApi{
     );
 
     //Once signed in, return the user credentials
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return await _firebaseAuth?.signInWithCredential(credential);
   }
 }

@@ -16,16 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   // String _email = '';
   LoginBloc? _loginBloc;
 
-  //
-  // void onGoogleSignClick() {
-  //   final auth = AuthenticationService();
-  //   final credentials = auth.signInWithGoogle();
-  //   setState(() {
-  //     _email = credentials.toString();
-  //   });
-  //   // auth.signOut();
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -46,7 +36,8 @@ class _LoginPageState extends State<LoginPage> {
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(color: Colors.white),
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 40.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -184,13 +175,15 @@ class _LoginPageState extends State<LoginPage> {
                         elevation: MaterialStateProperty.all(10.0),
                         shape:
                             MaterialStateProperty.all(const StadiumBorder())),
-                    onPressed: () => snapshot.hasData?Navigator.pushNamed(context, '/main-page'):_loginBloc?.googleSignInClicked.add(GoogleSignInEvent()),
-                    label:  Padding(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    onPressed: () => _loginBloc?.googleSignInClicked
+                        .add(GoogleSignInEvent()),
+                    label: const Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
                       child: Text(
-                        'Sign In with google ${snapshot.data}',
-                        style: const TextStyle(fontSize: 15, color: Colors.white),
+                        'Sign In with google',
+                        style:
+                            TextStyle(fontSize: 15, color: Colors.white),
                       ),
                     ),
                     icon: Image.asset(

@@ -74,7 +74,7 @@ class LoginBloc with Validators {
     });
 
     login.listen((action) {
-      action == 'Login' ? _login() : _createAccount();
+      action == 'Login' ? _login() :null;
     });
   }
 
@@ -88,10 +88,10 @@ class LoginBloc with Validators {
 
   Future<void> _signInWithGoogle() async {
     await authenticationApi.signInWithGoogle().then((userCredential) {
-      User? user = userCredential.user;
+      User? user = userCredential?.user;
       if (user != null) {
         if (kDebugMode) {
-          print(user.email);
+          print('_signInWithGoogle method: ${user.email}');
         }
         _client = Client(user.email);
         _inClient.add(_client?.email);
@@ -145,5 +145,7 @@ class LoginBloc with Validators {
     _emailController.close();
     _enableLoginButtonController.close();
     _loginController.close();
+    _googleLoginEvent.close();
+    _customerStateController.close();
   }
 }

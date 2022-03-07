@@ -1,26 +1,19 @@
 import 'dart:async';
 import 'package:carespot/services/authentication_api.dart';
-
-import '../classes/authentication_event.dart';
+import 'package:flutter/foundation.dart';
 
 class AuthenticationBloc {
   //Declare of Authentication Api
   final AuthenticationApi authenticationApi;
 
   //Stream controller (box) to hold user
-  final StreamController<String> _authenticationController =
-      StreamController<String>();
+  final StreamController<String?> _authenticationController =
+      StreamController<String?>();
 
-  Sink<String> get _addUser => _authenticationController
+  Sink<String?> get addUser => _authenticationController
       .sink; //Stream to get data into stream controller
-  Stream<String> get user =>
+  Stream<String?> get user =>
       _authenticationController.stream; //stream to output data
-
-
-  //For events, exposing only to a sink which is an input
-  final StreamController<AuthenticationEvent> _authenticationEventController = StreamController<AuthenticationEvent>();
-  Sink<AuthenticationEvent> get authenticationEventSink => _authenticationEventController.sink;
-
 
   //Stream controller (box) to logout user
   final StreamController<bool> _logoutController = StreamController<bool>();
@@ -30,43 +23,42 @@ class AuthenticationBloc {
   Stream<bool> get listLogoutUser =>
       _logoutController.stream; //stream to output data
 
-  AuthenticationBloc(this.authenticationApi){
-
+  AuthenticationBloc({required this.authenticationApi}) {
     //Check for authentication changes
+    if (kDebugMode) {
+      print('Listen for authentication changes');
+    }
     onAuthChanged();
-
-    //Whenever there is a new event, we want to map it to a new state
-    _authenticationEventController.stream.listen(_mapEventToAuthChangedState);
   }
 
-  //Maps the event from the ui
-void _mapEventToAuthChangedState(AuthenticationEvent event){
-
-}
-
-void onAuthChanged(){
-    authenticationApi
-        .getFirebaseAuth()
-        ?.authStateChanges()
-        .listen((user) {
-          final String? uid = user?.uid;
-          _addUser.add(uid!);
+  void onAuthChanged() {
+    if (kDebugMode) {
+      print('onAuthChanged method called');
+    }
+    authenticationApi.getFirebaseAuth()?.authStateChanges().listen((user) {
+      if (kDebugMode) {
+        print('onAuthChanged method $user');
+      }
+      final String? uid = user?.uid;
+      addUser.add(uid);
+    }).onError((error) {
+      if (kDebugMode) {
+        print('onAuthChanged method Error ${error.toString()}');
+      }
     });
     _logoutController.stream.listen((logout) {
-      if(logout == true){
+      if (logout == true) {
         _signOut();
       }
     });
-}
+  }
 
-void _signOut(){
+  void _signOut() {
     authenticationApi.signOut();
-}
+  }
 
-void dispose(){
+  void dispose() {
     _authenticationController.close();
     _logoutController.close();
-    _authenticationEventController.close();
-}
-
+  }
 }
