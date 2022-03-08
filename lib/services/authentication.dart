@@ -9,32 +9,17 @@ import 'package:firebase_core/firebase_core.dart';
 class AuthenticationService  implements AuthenticationApi{
 
   //Initialize the firebase auth
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-  AuthenticationService(){
-    init();
-  }
+  final FirebaseAuth? _firebaseAuth = FirebaseAuth.instance;
 
   @override
-  FirebaseAuth getFirebaseAuth(){
+  FirebaseAuth? getFirebaseAuth(){
     return _firebaseAuth;
-  }
-
-  @override
-  Future<void> init() async{
-    if (kDebugMode) {
-      print('initializing');
-    }
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform
-    );
   }
 
   //Get current User uid
   @override
   Future<String?> currentUserUid() async {
-    User? user = _firebaseAuth.currentUser;
+    User? user = _firebaseAuth?.currentUser;
     return user?.uid;
   }
 
@@ -42,7 +27,7 @@ class AuthenticationService  implements AuthenticationApi{
   //Check if the signing token has changed
   @override
   void tokenChanged() {
-    _firebaseAuth.idTokenChanges().listen((User? user) {
+    _firebaseAuth?.idTokenChanges().listen((User? user) {
       if (user == null) {
         if (kDebugMode) {
           print('User is currently signed out!');
@@ -58,7 +43,7 @@ class AuthenticationService  implements AuthenticationApi{
   //Check if the signed in user has changed
   @override
   void userChanged() {
-    _firebaseAuth.userChanges().listen((User? user) {
+    _firebaseAuth?.userChanges().listen((User? user) {
       if (user == null) {
         if (kDebugMode) {
           print('User is currently signed out');
@@ -77,7 +62,7 @@ class AuthenticationService  implements AuthenticationApi{
       {required String email, required String password}) async {
     UserCredential? userCredential;
     try {
-        userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        userCredential = await _firebaseAuth?.createUserWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -104,7 +89,7 @@ class AuthenticationService  implements AuthenticationApi{
     UserCredential? userCredential;
 
     try {
-      userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+      userCredential = await _firebaseAuth?.signInWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -128,7 +113,7 @@ class AuthenticationService  implements AuthenticationApi{
   //Verify user email by sending verification email
   @override
   Future<void> verifyUserEmail() async {
-    User? user = _firebaseAuth.currentUser;
+    User? user = _firebaseAuth?.currentUser;
     if(user!=null && !user.emailVerified){
       await user.sendEmailVerification();
     }
@@ -136,20 +121,20 @@ class AuthenticationService  implements AuthenticationApi{
 
   //check if the email is verified
   bool? isEmailVerified()  {
-    User? user = _firebaseAuth.currentUser;
+    User? user = _firebaseAuth?.currentUser;
     return user?.emailVerified;
   }
 
   //Signing out
   @override
   Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+    await _firebaseAuth?.signOut();
   }
 
 
   //Sign in with google
   @override
-  Future<UserCredential> signInWithGoogle() async {
+  Future<UserCredential?> signInWithGoogle() async {
     //Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -163,6 +148,6 @@ class AuthenticationService  implements AuthenticationApi{
     );
 
     //Once signed in, return the user credentials
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return await _firebaseAuth?.signInWithCredential(credential);
   }
 }
