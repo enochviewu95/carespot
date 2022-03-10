@@ -1,4 +1,5 @@
 import 'package:carespot/bloc/login_bloc.dart';
+import 'package:carespot/pages/registration.dart';
 import 'package:carespot/services/authentication.dart';
 import 'package:carespot/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -116,18 +117,25 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(
                       color: ComponentColors.primaryColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 10),
+                      fontSize: 15),
                 ),
                 TextButton(
                   child: const Text(
                     'Register',
                     style: TextStyle(
                       color: Colors.grey,
-                      fontSize: 10,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context){
+                        return const RegistrationPage();
+                      })
+                    );
+                  },
                 ),
               ],
             )));
