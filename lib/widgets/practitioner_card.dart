@@ -37,7 +37,7 @@ class PractitionerCardComponent extends StatelessWidget {
           ),
         ),
         subtitle: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 7.0,horizontal: 0.0),
+          padding: const EdgeInsets.symmetric(vertical: 2.0,horizontal: 0.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,

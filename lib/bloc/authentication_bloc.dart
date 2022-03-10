@@ -18,7 +18,7 @@ class AuthenticationBloc {
   //Stream controller (box) to logout user
   final StreamController<bool> _logoutController = StreamController<bool>();
 
-  Sink<bool> get _logoutUser =>
+  Sink<bool> get logoutUser =>
       _logoutController.sink; //stream to get data into stream controller
   Stream<bool> get listLogoutUser =>
       _logoutController.stream; //stream to output data

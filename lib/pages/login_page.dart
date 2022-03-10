@@ -106,39 +106,39 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ))),
-        bottomNavigationBar: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Don't have an account?",
-                  style: TextStyle(
-                      color: ComponentColors.primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
-                ),
-                TextButton(
-                  child: const Text(
-                    'Register',
+        bottomNavigationBar: BottomAppBar(
+          child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Don't have an account?",
                     style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        color: ComponentColors.primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context){
+                  TextButton(
+                    child: const Text(
+                      'Register',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
                         return const RegistrationPage();
-                      })
-                    );
-                  },
-                ),
-              ],
-            )));
+                      }));
+                    },
+                  ),
+                ],
+              )),
+        ));
   }
 
   Widget _buildLoginAndCreateButtons() {
@@ -186,12 +186,11 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () => _loginBloc?.googleSignInClicked
                         .add(GoogleSignInEvent()),
                     label: const Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: Text(
                         'Sign In with google',
-                        style:
-                            TextStyle(fontSize: 15, color: Colors.white),
+                        style: TextStyle(fontSize: 15, color: Colors.white),
                       ),
                     ),
                     icon: Image.asset(
