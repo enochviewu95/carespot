@@ -116,29 +116,7 @@ class LoginBloc with Validators {
     }
   }
 
-  Future<String> _createAccount() async {
-    String _result = '';
-    if (_emailValid! && _passwordValid!) {
-      await authenticationApi
-          .registerUser(email: _email!, password: _password!)
-          .then((user) {
-        print('Created user: $user');
-        _result = 'Created user: $user';
-        authenticationApi
-            .signIn(email: _email!, password: _password!)
-            .then((user) {})
-            .catchError((error) async {
-          print('Login error: $error');
-          _result = error;
-        });
-      }).catchError((error) async {
-        print('Creating user error: $error');
-      });
-      return _result;
-    } else {
-      return 'Error creating user';
-    }
-  }
+
 
   void dispose() {
     _passwordController.close();
